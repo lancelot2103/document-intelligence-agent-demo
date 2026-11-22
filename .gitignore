@@ -3,3 +3,7 @@ __pycache__/
 index.db
 .env
 .venv/
+
+# maintainer-only notes, not for the client-facing repo
+DEMO_SCRIPT.md
+README.zh-CN.md
