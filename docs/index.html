@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI agents that cannot invent numbers — reference implementation</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#2b323d;
+    --fg:#d7dee8; --dim:#8a96a6; --amber:#e5c07b; --green:#98c379;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:72px 24px 96px}
+  .kicker{color:var(--amber);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
+  h1{font-size:40px;line-height:1.25;margin:0 0 20px;font-weight:650;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--green)}
+  .lede{color:var(--dim);font-size:18px;max-width:680px;margin:0 0 40px}
+  .rule{height:1px;background:var(--line);margin:56px 0}
+  h2{font-size:20px;margin:0 0 18px;font-weight:600}
+  p{max-width:700px}
+  a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(152,195,121,.35)}
+  a:hover{border-bottom-color:var(--green)}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}h1{font-size:30px}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:15px;color:var(--amber);font-weight:600}
+  .card p{margin:0;color:var(--dim);font-size:14px;line-height:1.7}
+  pre{background:#0a0e13;border:1px solid var(--line);border-radius:10px;
+      padding:20px;overflow-x:auto;font:14px/1.7 Consolas,Menlo,monospace;color:var(--fg)}
+  pre .c{color:var(--dim)}
+  pre .g{color:var(--green)}
+  pre .a{color:var(--amber)}
+  .cta{display:inline-block;margin-top:8px;padding:13px 22px;border-radius:8px;
+       background:var(--green);color:#0d1117;font-weight:600;border:0;text-decoration:none}
+  .cta:hover{background:#a9d18e;border:0}
+  .cta.ghost{background:transparent;color:var(--fg);border:1px solid var(--line);margin-left:10px}
+  .cta.ghost:hover{border-color:var(--dim)}
+  footer{margin-top:64px;color:var(--dim);font-size:13px}
+  ul{max-width:700px;padding-left:20px;color:var(--dim)}
+  li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">Reference implementation · LangGraph · pgvector</div>
+
+  <h1>An AI agent that is not allowed to <em>invent a number</em></h1>
+
+  <p class="lede">
+    Most document-AI demos look great and fail quietly: the model produces a
+    confident invoice total that happens to be wrong. This is the opposite build —
+    arithmetic by parser and subtraction, writes blocked until a human approves.
+  </p>
+
+  <pre><span class="c">$ python demo.py</span>
+INV-2026-0413 is USD 18,450.00; INV-2026-0418 is USD 19,120.00 (tax 7%).
+INV-2026-0418 is the higher one, by USD 670.00 (3.63%).
+
+<span class="c">19,120.00 - 18,450.00 = 670.00   check it yourself</span>
+<span class="g">the model computed no number in this answer</span>
+
+<span class="a">*** GRAPH SUSPENDED -- nothing has been written ***</span>
+    action: flag_for_finance_review
+    effect: invoice locked from payment until cleared</pre>
+
+  <p style="margin-top:26px">
+    <a class="cta" href="https://github.com/lancelot2103/document-intelligence-agent-demo/releases/download/v1.0/agent-demo-walkthrough.mp4">Watch the 2-minute walkthrough</a>
+    <a class="cta ghost" href="https://github.com/lancelot2103/document-intelligence-agent-demo">Read the code</a>
+  </p>
+
+  <div class="rule"></div>
+
+  <h2>What this pattern covers</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Document intelligence</h3>
+      <p>Invoices, contracts, purchase orders, quotations. Extraction by model, validation by rules, totals computed — never generated.</p>
+    </div>
+    <div class="card">
+      <h3>Procurement &amp; supplier evaluation</h3>
+      <p>RFQ comparison, commercial deviation flags, bid comparison reports. Deterministic comparison, model-written narrative.</p>
+    </div>
+    <div class="card">
+      <h3>Project controls</h3>
+      <p>Primavera P6 XER and Excel schedules. A real parser for activities, logic links and baselines — an LLM does not read a critical path.</p>
+    </div>
+    <div class="card">
+      <h3>Human-in-the-loop writes</h3>
+      <p>Any state change suspends the graph with interrupt(). No database write happens without an explicit approval.</p>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <h2>Stack</h2>
+  <p>
+    Python · LangGraph · FastAPI · PostgreSQL + pgvector (HNSW, permission filtering inside the query)
+    · n8n for integration glue · Docker · self-hosted and offline deployments where client data
+    cannot leave the environment.
+  </p>
+
+  <div class="rule"></div>
+
+  <h2>What it does not do</h2>
+  <ul>
+    <li>Field extraction is regex in the demo — real invoice layouts need model extraction plus rule validation, built on the client's own samples.</li>
+    <li>The offline embedder is lexical; it is not a semantic model.</li>
+    <li>The flag action is simulated; a real deployment starts a transaction after approval.</li>
+  </ul>
+  <p style="color:var(--dim);font-size:14px">
+    Stated plainly on purpose. A vendor who will not list the limits of a 600-line demo
+    is not going to be honest about the limits of your production system.
+  </p>
+
+  <div class="rule"></div>
+
+  <h2>Availability</h2>
+  <p>
+    Individual developer, building the work myself. 15–20 hours per week, projects of
+    one to three months, UTC+8 with a fixed call window in your working morning.
+    Happy to start with one paid pilot before a full roadmap.
+  </p>
+  <p>
+    <a href="https://github.com/lancelot2103">Contact via GitHub</a>
+  </p>
+
+  <footer>
+    Reference implementation, not a product. Runs offline with no API key.
+    MIT licensed.
+  </footer>
+
+</div>
+</body>
+</html>
