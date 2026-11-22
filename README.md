@@ -8,6 +8,8 @@ A small, runnable reference for one specific claim:
 This repo is that claim, in code, in about 600 lines. It runs offline with no API key,
 and every figure it prints can be verified by hand.
 
+▶ **[Watch the 2-minute narrated walkthrough](https://github.com/lancelot2103/document-intelligence-agent-demo/releases/download/v1.0/agent-demo-walkthrough.mp4)**
+
 ---
 
 ## What it actually does
