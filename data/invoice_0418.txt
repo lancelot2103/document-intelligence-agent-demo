@@ -1,0 +1,13 @@
+Invoice INV-2026-0418
+Supplier: Meridian Castings GmbH
+Purchase order: PO-88231
+Issue date: 2026-11-05
+Due date: 2026-12-20
+Currency: USD
+Subtotal: 17,869.16
+Tax: 7%
+Total due: 19,120.00
+Payment terms: Net 45
+
+Scope: 240 units of bracket assembly BR-22, same specification as PO-88214.
+Goods received on 2026-11-11, 6 units rejected on dimensional inspection.

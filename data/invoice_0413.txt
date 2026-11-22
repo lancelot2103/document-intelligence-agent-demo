@@ -1,0 +1,13 @@
+Invoice INV-2026-0413
+Supplier: Northwind Fabrication Ltd.
+Purchase order: PO-88214
+Issue date: 2026-11-02
+Due date: 2026-12-15
+Currency: USD
+Subtotal: 17,243.00
+Freight: 1,207.00
+Total due: 18,450.00
+Payment terms: Net 45
+
+Scope: 240 units of bracket assembly BR-22, delivered to the Rotterdam warehouse.
+Goods received on 2026-11-06 in full, no damage reported.

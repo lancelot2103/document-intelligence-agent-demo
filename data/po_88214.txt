@@ -1,0 +1,9 @@
+Purchase order PO-88214
+Buyer: Halden Industrial
+Supplier: Northwind Fabrication Ltd.
+Quantity: 240 units, bracket assembly BR-22
+Unit price: 71.85
+Currency: USD
+Incoterm: DAP Rotterdam
+Awarded: 2026-10-28
+Award basis: lowest compliant bid after technical review.

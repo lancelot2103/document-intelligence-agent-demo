@@ -1,0 +1,9 @@
+Email thread: discrepancy on bracket assembly BR-22
+From: procurement
+Date: 2026-11-12
+
+Northwind shipped 240 units, all accepted.
+Meridian shipped 240 units, 6 rejected for dimensional deviation.
+Both invoices are for the same part number and the same quantity.
+Meridian is invoicing a higher total than Northwind despite the rejected units.
+Requested action: hold Meridian payment until the dimensional issue is resolved.
